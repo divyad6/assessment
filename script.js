@@ -28,11 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // TODO: replace with real evaluation criteria
             const summary = `Your score is ${score}/30. This indicates ${
-                score >= 25
+                score == 30
+                    ? "no signs of dementia."
+                :score >= 25
                     ? "mild signs of dementia."
-                    : score >= 15
+                : score >= 15
                     ? "moderate signs of dementia."
-                    : "severe signs of dementia."
+                : "severe signs of dementia."
             }`;
 
             localStorage.setItem("resultsSummary", summary);
