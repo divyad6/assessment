@@ -34,9 +34,9 @@ button:hover {
 
 input {
     display: block;
-    width: 100%;
+    width: 97%;
     margin-bottom: 15px;
-    margin-left: 15px;
+    margin-right: 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
