@@ -19,14 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
         assessmentForm.addEventListener("submit", (e) => {
             e.preventDefault();
             let score = 0;
-            // Default scoring criteria (Replace with real criteria)
-            score += document.getElementById("q1").value === "correct" ? 5 : 0;
-            score += document.getElementById("q2").value === "correct" ? 5 : 0;
+            // TODO: replace with real answers
+            score += document.getElementById("q1").value === "January 3, 2025" ? 5 : 0;
+            score += document.getElementById("q2").value === "Fremont" ? 5 : 0;
             score += document.getElementById("q3").value === "4,7,3" ? 5 : 0;
-            score += document.getElementById("q4").value === "20,18,16,14..." ? 10 : 0;
+            score += document.getElementById("q4").value === "20,18,16,14,12,10,8,6,4,2,0" ? 10 : 0;
             score += document.getElementById("q5").value.split(",").length > 5 ? 5 : 0;
 
-            // Default evaluation criteria
+            // TODO: replace with real evaluation criteria
             const summary = `Your score is ${score}/30. This indicates ${
                 score >= 25
                     ? "mild signs of dementia."
