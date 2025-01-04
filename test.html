@@ -3,38 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assessment Test</title>
+    <title>Mini Mental Exam</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h2>Assessment Questions</h2>
+        <button id="instructions-btn">View Instructions</button>
         <form id="assessment-form">
-            <!-- TODO: replace with real questions -->
-            <!-- TODO: make it so that answers don't save/auto recommend -->
-            <div class="question">
-                <p>1. What is today's date? (5 points)</p>
-                <input type="text" id="q1">
+            <!-- Section 1 -->
+            <div class="question-section" id="section1">
+                <h2>Section 1: Orientation</h2>
+                <p><strong>Time Allotted:</strong> 10 seconds for each reply</p>
+                <div class="question">
+                    <label>a) What year is this? (accept exact answer only)</label>
+                    <div class="score-input">
+                        <input type="number" id="s1a" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>b) What season is this? (accept either last week of old season or first week of new season)</label>
+                    <div class="score-input">
+                        <input type="number" id="s1b" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>c) What month is this? (accept first day of new month or last day of previous month)</label>
+                    <div class="score-input">
+                        <input type="number" id="s1c" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>d) What is today's date? (accept previous or next date)</label>
+                    <div class="score-input">
+                        <input type="number" id="s1d" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>e) What day of the week is this? (accept exact answer only)</label>
+                    <div class="score-input">
+                        <input type="number" id="s1e" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <button type="button" class="back-btn">Back</button>
+                <button type="button" class="next-btn">Next Section</button>
             </div>
-            <div class="question">
-                <p>2. What city are you currently in? (5 points)</p>
-                <input type="text" id="q2">
+
+            <!-- Section 2 -->
+            <div class="question-section" id="section2" style="display:none;">
+                <h2>Section 2: Orientation</h2>
+                <p><strong>Time Allotted:</strong> 10 seconds for each reply</p>
+                <div class="question">
+                    <label>a) What country are we in? (accept exact answer only)</label>
+                    <div class="score-input">
+                        <input type="number" id="s2a" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>b) What province are we in? (accept exact answer only)</label>
+                    <div class="score-input">
+                        <input type="number" id="s2b" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>c) What city/town are we in? (accept exact answer only)</label>
+                    <div class="score-input">
+                        <input type="number" id="s2c" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>d) What is the street address of this house? (accept street name and house number or equivalent in rural areas)</label>
+                    <div class="score-input">
+                        <input type="number" id="s2d" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>e) What room are we in? (accept exact answer only)</label>
+                    <div class="score-input">
+                        <input type="number" id="s2e" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
             </div>
-            <div class="question">
-                <p>3. Repeat the sequence: 4, 7, 3. (5 points)</p>
-                <input type="text" id="q3">
+
+            <!-- Section 3 -->
+            <div class="question-section" id="section3" style="display:none;">
+                <h2>Section 3: Registration</h2>
+                <p><strong>Time Allotted:</strong> 20 seconds</p>
+                <div class="question">
+                    <p>Say: "I am going to name three objects. When I am finished, I want you to repeat them. Remember what they are because I am going to ask you to name them again in a few minutes."</p>
+                    <p>(Say the following words slowly at approximately one-second intervals): <strong>Ball / Car / Man</strong></p>
+                    <p>For repeated use: Bell, jar, fan; Bill, tar, can; Bull, bar, pan.</p>
+                    <label>Please repeat the three items for me.</label>
+
+                    <div class="score-input">
+                        <input type="number" id="s3" min="0" max="3" required>
+                        <span>/3</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
             </div>
-            <div class="question">
-                <p>4. Count backward from 20 by 2s. (10 points)</p>
-                <input type="text" id="q4">
+
+            <!-- Section 4 -->
+            <div class="question-section" id="section4" style="display:none;">
+                <h2>Section 4: Attention and Calculation</h2>
+                <p><strong>Time Allotted:</strong> 30 seconds</p>
+                <div class="question">
+                    <label>Spell the word <strong>WORLD</strong>. (You may help the person to spell the word correctly)</label>
+                    <label>Say: "Now spell it backwards please."</label>
+
+                    <div class="score-input">
+                        <input type="number" id="s4" min="0" max="5" required>
+                        <span>/5</span>
+                    </div>
+                </div>
+                <p>[Insert pop-up button for scoring instructions for WORLD reversal here]</p>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
             </div>
-            <div class="question">
-                <p>5. Name as many animals as you can in one minute. (5 points)</p>
-                <input type="text" id="q5">
+
+            <!-- Section 5 -->
+            <div class="question-section" id="section5" style="display:none;">
+                <h2>Section 5: Recall</h2>
+                <p><strong>Time Allotted:</strong> 10 seconds</p>
+                <div class="question">
+                    <p>Say: "Now, what were the three objects I asked you to remember?"</p>
+
+                    <div class="score-input">
+                        <input type="number" id="s5" min="0" max="3" required>
+                        <span>/3</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
             </div>
-            <button type="submit">Submit</button>
+
+            <!-- Section 6 -->
+            <div class="question-section" id="section6" style="display:none;">
+                <h2>Section 6: Language (Naming)</h2>
+                <p><strong>Time Allotted:</strong> 10 seconds for each item</p>
+                <div class="question">
+                    <p>a) Show a wristwatch. Ask: "What is this called?"</p>
+                    <!-- Placeholder for image of a wristwatch -->
+                    <p><em>[Insert image of a wristwatch here]</em></p>
+
+                    <div class="score-input">
+                        <input type="number" id="s6a" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <div class="question">
+                    <p>b) Show a pencil. Ask: "What is this called?"</p>
+                    <!-- Placeholder for image of a pencil -->
+                    <p><em>[Insert image of a pencil here]</em></p>
+
+                    <div class="score-input">
+                        <input type="number" id="s6b" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
+            </div>
+
+            <!-- Section 7 -->
+            <div class="question-section" id="section7" style="display:none;">
+                <h2>Section 7: Repetition</h2>
+                <p><strong>Time Allotted:</strong> 10 seconds</p>
+                <div class="question">
+                    <p>Say: "I would like you to repeat a phrase after me: <strong>No ifs, ands, or buts</strong>"</p>
+                    
+                    <div class="score-input">
+                        <input type="number" id="s7" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
+            </div>
+
+            <!-- Section 8 -->
+            <div class="question-section" id="section8" style="display:none;">
+                <h2>Section 8: Reading</h2>
+                <p><strong>Time Allotted:</strong> 10 seconds</p>
+                <div class="question">
+                    <p>Say: "Read the words on this page and then do what it says."</p>
+                    <!-- Placeholder for "CLOSE YOUR EYES" instruction -->
+                    <p><em>[Insert image or text of "CLOSE YOUR EYES" here]</em></p>
+
+                    <div class="score-input">
+                        <input type="number" id="s8" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
+            </div>
+
+            <!-- Section 9 -->
+            <div class="question-section" id="section9" style="display:none;">
+                <h2>Section 9: Writing</h2>
+                <p><strong>Time Allotted:</strong> 30 seconds</p>
+                <div class="question">
+                    <p>Hand the participant a piece of paper and a pencil.</p>
+                    <p>Say: "Write any complete sentence on that piece of paper."</p>
+
+                    <div class="score-input">
+                        <input type="number" id="s9" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
+            </div>
+
+            <!-- Section 10 -->
+            <div class="question-section" id="section10" style="display:none;">
+                <h2>Section 10: Copying</h2>
+                <p><strong>Time Allotted:</strong> 1 minute maximum</p>
+                <div class="question">
+                    <p>Place design, eraser, and pencil in front of the participant.</p>
+                    <p>Say: "Copy this design, please."</p>
+                    <!-- Placeholder for the design image -->
+                    <p><em>[Insert image of the design here]</em></p>
+
+                    <div class="score-input">
+                        <input type="number" id="s10" min="0" max="1" required>
+                        <span>/1</span>
+                    </div>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="button" class="next-btn">Next Section</button>
+            </div>
+
+            <!-- Section 11 -->
+            <div class="question-section" id="section11" style="display:none;">
+                <h2>Section 11: Three-Stage Command</h2>
+                <p><strong>Time Allotted:</strong> 30 seconds</p>
+                <div class="question">
+                    <p>Ask the participant if they are right or left-handed.</p>
+                    <p>Take a piece of paper, hold it up in front of the participant and say:</p>
+                    <p>"Take this paper in your right/left hand (whichever is non-dominant), fold the paper in half once with both hands, and put the paper down on the floor."</p>
+                    <label>Did the participant take the paper in the correct hand? Score (_ / 1):</label>
+                    <input type="number" id="s11a" min="0" max="1" required>
+                    <label>Did the participant fold the paper in half? Score (_ / 1):</label>
+                    <input type="number" id="s11b" min="0" max="1" required>
+                    <label>Did the participant put the paper on the floor? Score (_ / 1):</label>
+                    <input type="number" id="s11c" min="0" max="1" required>
+                </div>
+                <button type="button" class="prev-btn">Previous Section</button>
+                <button type="submit">Submit</button>
+            </div>
+
         </form>
-        <button onclick="history.back()">Back</button>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div id="instructions-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Instructions for Administration</h2>
+            <p>1. Before the questionnaire is administered, try to get the person to sit down facing you. Assess the person’s ability to hear and understand very simple conversation, e.g., "What is your name?" If the person uses hearing or visual aids, provide these before starting.</p>
+            <p>2. Introduce yourself and try to get the person’s confidence. Before you begin, get the person’s permission to ask questions, e.g., "Would it be alright to ask you some questions about your memory?" This helps to avoid catastrophic reactions.</p>
+            <p>3. Ask each question a maximum of three times. If the subject does not respond, score 0.</p>
+            <p>4. If the person answers incorrectly, score 0. Accept that answer and do not ask the question again, hint, or provide any physical clues such as head shaking, etc.</p>
+            <p>5. The following equipment is required to administer the instrument: A watch, a pencil, the provided pages with "CLOSE YOUR EYES" written in large letters and two five-sided figures intersecting to make a four-sided figure, and a blank piece of paper.</p>
+            <p>6. If the person answers: "What did you say?", do not explain or engage in conversation. Merely repeat the same directions a maximum of three times.</p>
+            <p>7. If the person interrupts (e.g., "What is this for?"), reply: "I will explain in a few minutes, when we are finished. Now if we could proceed please… we are almost finished."</p>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
