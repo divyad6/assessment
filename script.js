@@ -1,12 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Variables for sections and navigation
     const sections = document.querySelectorAll(".question-section");
+
     const instructionsBtn = document.getElementById("instructions-btn");
     const modal = document.getElementById("instructions-modal");
-    const closeBtn = document.querySelector(".close-btn");
+
+    const worldExamples = document.getElementById("world-examples");
+    const world_modal = document.getElementById("world-modal");
+
+    const watch = document.getElementById("watch");
+    const watch_modal = document.getElementById("watch-modal");
+
+    const pencil = document.getElementById("pencil");
+    const pencil_modal = document.getElementById("pencil-modal");
+
+    const eyes = document.getElementById("eyes");
+    const eyes_modal = document.getElementById("eyes-modal");
+
+    const figures = document.getElementById("figures");
+    const figures_modal = document.getElementById("figures-modal");
+
     const startBtn = document.getElementById("start-btn");
-    // const backBtn = document.getElementById("back-btn");
-    const registrationForm = document.getElementById("registration-form");
+    const instrPage = document.getElementById("instruction-page");
+
     let currentSection = 0;
 
     /**
@@ -19,7 +34,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
-     * Redirects from section 1 back to the disclaimer page.
+     * Redirects from the disclaimer page to the instructions page.
+     */
+    const InstrBtns = document.querySelectorAll(".instr-btn");
+    InstrBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            window.location.href = "instructions.html";
+        });
+    });
+
+    /**
+     * Redirects from section 1 back to the instructions.
+     */
+    const backToInstructionBtns = document.querySelectorAll(".back-instr-btn");
+    backToInstructionBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            window.location.href = "instructions.html";
+        });
+    });
+
+    /**
+     * Redirects from instructions back to the disclaimer page.
      */
     const backBtns = document.querySelectorAll(".back-btn");
     backBtns.forEach((btn) => {
@@ -39,10 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /**
-     * Handles registration form submission and redirects to the test page.
+     * Redirects from instruction page to the test page.
      */
-    if (registrationForm) {
-        registrationForm.addEventListener("submit", (e) => {
+    if (instrPage) {
+        instrPage.addEventListener("submit", (e) => {
             e.preventDefault();
             window.location.href = "test.html";
         });
@@ -102,17 +137,17 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             const lastInputs = sections[currentSection].querySelectorAll("input[required]");
             if (validateInputs(lastInputs)) {
-                // Calculate total score
+                // calculate total score
                 let totalScore = 0;
                 const allInputs = document.querySelectorAll("input[type='number']");
                 allInputs.forEach((input) => {
                     totalScore += parseInt(input.value) || 0;
                 });
 
-                // Determine interpretation
+                // determine interpretation
                 let interpretation = "";
                 if (totalScore >= 26) {
-                    interpretation = "normal cognitive function.";
+                    interpretation = "likely normal cognitive function.";
                 } else if (totalScore >= 20) {
                     interpretation = "mild cognitive impairment.";
                 } else if (totalScore >= 10) {
@@ -121,13 +156,26 @@ document.addEventListener("DOMContentLoaded", () => {
                     interpretation = "severe cognitive impairment.";
                 }
 
-                // Display results
                 const summary = `Your total score is ${totalScore}. This indicates ${interpretation}`;
                 localStorage.setItem("resultsSummary", summary);
                 window.location.href = "results.html";
             }
         });
     }
+
+    // Restrict user input to min max values for each score
+    document.querySelectorAll('input[type="number"]').forEach((input) => {
+        input.addEventListener("input", (e) => {
+            const max = parseInt(input.max, 10);
+            const value = parseInt(input.value, 10); 
+    
+            if (value > max) {
+                input.value = max; // restrict value to the max allowed
+            } else if (value < 0 || isNaN(value)) {
+                input.value = 0; // reset to min value if below 0 or invalid
+            }
+        });
+    });
 
     /**
      * Displays the results summary on the results page.
@@ -148,20 +196,67 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
-     * Handles the closing of the instructions modal.
+     * Handles the opening of the world scoring examples modal.
      */
-    if (closeBtn) {
-        closeBtn.addEventListener("click", () => {
-            modal.style.display = "none";
+    if (worldExamples) {
+        worldExamples.addEventListener("click", () => {
+            world_modal.style.display = "flex";
         });
     }
 
     /**
-     * Closes the modal when clicking outside of it.
+     * Handles the opening of the watch modal.
+     */
+    if (watch) {
+        watch.addEventListener("click", () => {
+            if (watch_modal) watch_modal.style.display = "flex";
+        });
+    }
+
+    /**
+     * Handles the opening of the pencil modal.
+     */
+    if (pencil) {
+        pencil.addEventListener("click", () => {
+            if (pencil_modal) pencil_modal.style.display = "flex";
+        });
+    }
+
+    /**
+     * Handles the opening of the "close your eyes" modal.
+     */
+    if (eyes) {
+        eyes.addEventListener("click", () => {
+            if (eyes_modal) eyes_modal.style.display = "flex";
+        });
+    }
+
+    /**
+     * Handles the opening of the intersecting figures modal.
+     */
+    if (figures) {
+        figures.addEventListener("click", () => {
+            if (figures_modal) figures_modal.style.display = "flex";
+        });
+    }
+
+    /**
+     * Handles the close buttons for modals.
+     */
+    const closeBtns = document.querySelectorAll(".close-btn");
+    closeBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            const modal = btn.closest(".modal");
+            if (modal) modal.style.display = "none";
+        });
+    });
+
+    /**
+     * Closes modals when clicking outside of it.
      */
     window.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.style.display = "none";
+        if (e.target.classList.contains("modal")) {
+            e.target.style.display = "none";
         }
     });
 
