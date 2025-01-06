@@ -24,6 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentSection = 0;
 
+    const timerPanel = document.getElementById("timer-panel");
+    const openTimerBtn = document.getElementById("open-timer");
+    const closeTimerBtn = document.getElementById("close-timer");
+    const startTimerBtn = document.getElementById("start-timer");
+    const restartTimerBtn = document.getElementById("restart-timer");
+    const timerDisplay = document.getElementById("timer-display");
+    const timeInput = document.getElementById("time-input");
+
+    let countdown;
+    let timeLeft = 0;
+
     /**
      * Redirects from the start page to the disclaimer page.
      */
@@ -90,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     const validateInputs = (inputs) => {
         for (const input of inputs) {
-            if (!input.value.trim()) {
+            if (input.tagName === "SELECT" && !input.value) {
                 alert("Please answer all questions before moving to the next section.");
                 input.focus();
                 return false;
@@ -105,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtns = document.querySelectorAll(".next-btn");
     nextBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
-            const currentInputs = sections[currentSection].querySelectorAll("input[required]");
+            const currentInputs = sections[currentSection].querySelectorAll("select[required]");
             if (validateInputs(currentInputs)) {
                 sections[currentSection].style.display = "none";
                 currentSection++;
@@ -128,54 +139,69 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+
     /**
+    * Populates dropdown options for score inputs.
+    * @param {HTMLSelectElement} select - The dropdown element to populate.
+    * @param {number} max - The maximum score value.
+    */
+    const populateDropdown = (select, max) => {
+        // empty placeholder option
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = " ";
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        select.appendChild(placeholder);
+
+        for (let i = 0; i <= max; i++) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.textContent = i;
+            select.appendChild(option);
+        }
+    };
+
+    // Replace all numeric inputs with dropdowns dynamically
+    document.querySelectorAll(".score-input select").forEach((select) => {
+        const maxScore = parseInt(select.nextElementSibling.textContent.replace("/", ""), 10);
+        populateDropdown(select, maxScore);
+    });
+
+     /**
      * Handles form submission and validates the last section before submission.
      */
-    const assessmentForm = document.getElementById("assessment-form");
-    if (assessmentForm) {
-        assessmentForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const lastInputs = sections[currentSection].querySelectorAll("input[required]");
-            if (validateInputs(lastInputs)) {
-                // calculate total score
-                let totalScore = 0;
-                const allInputs = document.querySelectorAll("input[type='number']");
-                allInputs.forEach((input) => {
-                    totalScore += parseInt(input.value) || 0;
-                });
-
-                // determine interpretation
-                let interpretation = "";
-                if (totalScore >= 26) {
-                    interpretation = "likely normal cognitive function.";
-                } else if (totalScore >= 20) {
-                    interpretation = "mild cognitive impairment.";
-                } else if (totalScore >= 10) {
-                    interpretation = "moderate cognitive impairment.";
-                } else {
-                    interpretation = "severe cognitive impairment.";
-                }
-
-                const summary = `Your total score is ${totalScore}. This indicates ${interpretation}`;
-                localStorage.setItem("resultsSummary", summary);
-                window.location.href = "results.html";
-            }
-        });
-    }
-
-    // Restrict user input to min max values for each score
-    document.querySelectorAll('input[type="number"]').forEach((input) => {
-        input.addEventListener("input", (e) => {
-            const max = parseInt(input.max, 10);
-            const value = parseInt(input.value, 10); 
-    
-            if (value > max) {
-                input.value = max; // restrict value to the max allowed
-            } else if (value < 0 || isNaN(value)) {
-                input.value = 0; // reset to min value if below 0 or invalid
-            }
-        });
-    });
+     const assessmentForm = document.getElementById("assessment-form");
+     if (assessmentForm) {
+         assessmentForm.addEventListener("submit", (e) => {
+             e.preventDefault();
+             const lastInputs = sections[currentSection].querySelectorAll("select[required]");
+             if (validateInputs(lastInputs)) {
+                 // calculate total score
+                 let totalScore = 0;
+                 const allInputs = document.querySelectorAll("select");
+                 allInputs.forEach((input) => {
+                     totalScore += parseInt(input.value) || 0;
+                 });
+ 
+                 // determine interpretation
+                 let interpretation = "";
+                 if (totalScore >= 26) {
+                     interpretation = "likely normal cognitive function.";
+                 } else if (totalScore >= 20) {
+                     interpretation = "mild cognitive impairment.";
+                 } else if (totalScore >= 10) {
+                     interpretation = "moderate cognitive impairment.";
+                 } else {
+                     interpretation = "severe cognitive impairment.";
+                 }
+ 
+                 const summary = `Your total score is ${totalScore}. This indicates ${interpretation}`;
+                 localStorage.setItem("resultsSummary", summary);
+                 window.location.href = "results.html";
+             }
+         });
+     }
 
     /**
      * Displays the results summary on the results page.
@@ -268,4 +294,66 @@ document.addEventListener("DOMContentLoaded", () => {
             section.style.display = index === 0 ? "block" : "none";
         });
     }
+
+    // Show the timer panel and hide the arrow button
+    openTimerBtn.addEventListener("click", () => {
+        timerPanel.classList.add("active");
+        openTimerBtn.classList.add("hidden");
+    });
+
+    // Hide the timer panel and show the arrow button
+    closeTimerBtn.addEventListener("click", () => {
+        timerPanel.classList.remove("active");
+        openTimerBtn.classList.remove("hidden");
+    });
+
+    // Format time as MM:SS
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+            .toString()
+            .padStart(2, "0")}`;
+    };
+
+    // Update the timer display
+    const updateTimerDisplay = () => {
+        timerDisplay.textContent = formatTime(timeLeft);
+    };
+
+    // Start the countdown
+    const startTimer = () => {
+        if (countdown) clearInterval(countdown);
+
+        timeLeft = parseInt(timeInput.value, 10);
+
+        if (isNaN(timeLeft) || timeLeft <= 0) {
+            alert("Please enter a valid time in seconds.");
+            return;
+        }
+
+        updateTimerDisplay();
+
+        countdown = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                alert("Time's up!");
+            }
+        }, 1000);
+    };
+
+    // Restart the timer
+    const restartTimer = () => {
+        if (countdown) clearInterval(countdown);
+        timeLeft = 0;
+        timerDisplay.textContent = "00:00";
+        timeInput.value = "";
+    };
+
+    // Event listeners for timer controls
+    startTimerBtn.addEventListener("click", startTimer);
+    restartTimerBtn.addEventListener("click", restartTimer);
 });

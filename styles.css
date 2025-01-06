@@ -234,3 +234,101 @@ label {
 .image-links a:hover {
     color: #0056b3;
 }
+
+.timer-panel {
+    position: fixed;
+    top: 50%;
+    right: -320px;
+    width: 300px;
+    height: 300px;
+    transform: translateY(-50%);
+    background: #f4f4f4;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: right 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.timer-panel.active {
+    right: 0;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.timer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.timer-body {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.timer-body label {
+    font-size: 14px;
+}
+
+.timer-body input {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.timer-controls {
+    margin-top: 15px;
+}
+
+.timer-btn {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+.timer-btn:hover {
+    background: #45a049;
+}
+
+#timer-display {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.open-timer-btn {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 10px;
+    font-size: 18px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer;
+}
+
+.open-timer-btn:hover {
+    background: #45a049;
+}
+
+.open-timer-btn.hidden {
+    display: none;
+}
