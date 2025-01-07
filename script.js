@@ -49,8 +49,17 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     const InstrBtns = document.querySelectorAll(".instr-btn");
     InstrBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-            window.location.href = "instructions.html";
+        btn.addEventListener("click", (e) => {
+            const form = btn.closest("form");
+            if (form) {
+                if (!form.checkValidity()) {
+                    e.preventDefault();
+                    form.reportValidity(); 
+                } else {
+                    e.preventDefault();
+                    window.location.href = "instructions.html";
+                }
+            }
         });
     });
 

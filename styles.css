@@ -270,20 +270,25 @@ label {
 }
 
 .timer-body {
-    margin-top: 20px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; 
+}
+
+.timer-body input {
+    text-align: center; 
+    font-size: 16px;
+    padding: 10px;
+    width: 60%;
+    margin: 10px 0; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .timer-body label {
     font-size: 14px;
-}
-
-.timer-body input {
-    width: 80%;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
 .timer-controls {
@@ -296,13 +301,13 @@ label {
     font-size: 14px;
     border: none;
     border-radius: 5px;
-    background: #4caf50;
+    background: #57b67a;
     color: white;
     cursor: pointer;
 }
 
 .timer-btn:hover {
-    background: #45a049;
+    background: #57b67a;
 }
 
 #timer-display {
@@ -318,7 +323,7 @@ label {
     transform: translateY(-50%);
     padding: 10px;
     font-size: 18px;
-    background: #4caf50;
+    background: black;
     color: white;
     border: none;
     border-radius: 5px 0 0 5px;
@@ -326,7 +331,7 @@ label {
 }
 
 .open-timer-btn:hover {
-    background: #45a049;
+    background: black;
 }
 
 .open-timer-btn.hidden {
