@@ -149,12 +149,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    // /**
+    // * Populates dropdown options for score inputs.
+    // * @param {HTMLSelectElement} select - The dropdown element to populate.
+    // * @param {number} max - The maximum score value.
+    // */
+    // const populateDropdown = (select, max) => {
+    //     // empty placeholder option
+    //     const placeholder = document.createElement("option");
+    //     placeholder.value = "";
+    //     placeholder.textContent = " ";
+    //     placeholder.disabled = true;
+    //     placeholder.selected = true;
+    //     select.appendChild(placeholder);
+
+    //     for (let i = 0; i <= max; i++) {
+    //         const option = document.createElement("option");
+    //         option.value = i;
+    //         option.textContent = i;
+    //         select.appendChild(option);
+    //     }
+    // };
+
+    // // Replace all numeric inputs with dropdowns dynamically
+    // document.querySelectorAll(".score-input select").forEach((select) => {
+    //     const maxScore = parseInt(select.nextElementSibling.textContent.replace("/", ""), 10);
+    //     populateDropdown(select, maxScore);
+    // });
+
     /**
-    * Populates dropdown options for score inputs.
-    * @param {HTMLSelectElement} select - The dropdown element to populate.
-    * @param {number} max - The maximum score value.
-    */
-    const populateDropdown = (select, max) => {
+     * Populates dropdown options for score inputs.
+     * @param {HTMLSelectElement} select - The dropdown element to populate.
+     * @param {boolean} isBinary - If true, the dropdown is for binary answers (Correct/Incorrect).
+     */
+    const populateDropdown = (select, isBinary = false) => {
         // empty placeholder option
         const placeholder = document.createElement("option");
         placeholder.value = "";
@@ -163,18 +191,32 @@ document.addEventListener("DOMContentLoaded", () => {
         placeholder.selected = true;
         select.appendChild(placeholder);
 
-        for (let i = 0; i <= max; i++) {
-            const option = document.createElement("option");
-            option.value = i;
-            option.textContent = i;
-            select.appendChild(option);
+        if (isBinary) {
+            const correctOption = document.createElement("option");
+            correctOption.value = 1;
+            correctOption.textContent = "Correct";
+            select.appendChild(correctOption);
+
+            const incorrectOption = document.createElement("option");
+            incorrectOption.value = 0;
+            incorrectOption.textContent = "Incorrect";
+            select.appendChild(incorrectOption);
+        } else {
+            const maxScore = parseInt(select.nextElementSibling.textContent.replace("/", ""), 10);
+            for (let i = 0; i <= maxScore; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.textContent = i;
+                select.appendChild(option);
+            }
         }
     };
 
-    // Replace all numeric inputs with dropdowns dynamically
+    // Replace all numeric inputs or binary inputs dynamically
     document.querySelectorAll(".score-input select").forEach((select) => {
-        const maxScore = parseInt(select.nextElementSibling.textContent.replace("/", ""), 10);
-        populateDropdown(select, maxScore);
+        const scoreLabel = select.nextElementSibling;
+        const isBinary = !scoreLabel; // if there's no span, it's binary
+        populateDropdown(select, isBinary);
     });
 
      /**
